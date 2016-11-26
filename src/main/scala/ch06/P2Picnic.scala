@@ -1,4 +1,4 @@
-package ch6
+package ch06
 
 import java.io.{BufferedReader, StringReader}
 
@@ -7,11 +7,9 @@ import scala.annotation.tailrec
 /**
 	* Created by ipoemi on 2016-11-24.
 	*/
-object Problem6_3 {
+object P2Picnic {
 
 	import scala.io._
-
-	val thisCollection = Vector(1, 2, 3, 7, 4, 5, 7, 7, 7).map(_ + 3)
 
 	val in =
 		"""3

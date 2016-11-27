@@ -9,7 +9,7 @@ object P1Boggle {
 
 	import scala.io._
 
-	val in =
+	val in: String =
 		"""1
 			|URLPM
 			|XPRET
@@ -44,7 +44,7 @@ object P1Boggle {
 			if (hasWord(board, nextX, nextY, word.substring(1)))
 				return true
 		}
-		return false
+		false
 	}
 
 	def main(args: Array[String]): Unit = {
@@ -57,7 +57,7 @@ object P1Boggle {
 			val wordCount = source.next().toInt
 			val words = (0 until wordCount).map(_ => source.next())
 
-			println(s"-- testCase $testCount --")
+			println(s"-- testCase $testNo --")
 			println(s"board: ")
 			println(board)
 			println(s"wordCount: $wordCount")
@@ -66,8 +66,8 @@ object P1Boggle {
 
 			words.foreach { word =>
 				var found = false
-				for (y <- (0 until board.size) if !found)
-					for (x <- (0 until board(y).size) if !found) {
+				for (y <- board.indices if !found)
+					for (x <- board(y).indices if !found) {
 						if (hasWord(board, x, y, word)) {
 							found = true
 							println(s"$word YES")

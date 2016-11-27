@@ -17,7 +17,7 @@ object P3BoardCover {
 		Vector((0, 0), (1, 0), (1, -1))
 	)
 
-	val in =
+	val in: String =
 		"""3
 			|3 7
 			|#.....#
@@ -39,8 +39,8 @@ object P3BoardCover {
 			|""".stripMargin
 
 	def printBoard(board: Array[Array[Int]]): Unit = {
-		(0 until board.size).foreach { y =>
-			(0 until board(y).size).foreach { x =>
+		board.indices.foreach { y =>
+			board(y).indices.foreach { x =>
 				print(s"${board(y)(x)} ")
 			}
 			println()
@@ -52,7 +52,7 @@ object P3BoardCover {
 		var ret = true
 		coverTypes(coverType).foreach { tp =>
 			val (ny, nx) = (y + tp._1, x + tp._2)
-			if (ny < 0 || ny >= board.size || nx < 0 || nx > board(y).size) {
+			if (ny < 0 || ny >= board.length || nx < 0 || nx > board(y).length) {
 				ret = false
 			} else {
 				board(ny)(nx) += delta
@@ -65,8 +65,8 @@ object P3BoardCover {
 	def solve(board: Array[Array[Int]]): Int = {
 		//printBoard(board)
 		var (y, x) = (-1, -1)
-		for (ny <- (0 until board.size) if y == -1)
-			for (nx <- (0 until board(ny).size) if x == -1)
+		for (ny <- board.indices if y == -1)
+			for (nx <- board(ny).indices if x == -1)
 				if (board(ny)(nx) == 0) {
 					y = ny
 					x = nx
@@ -76,7 +76,7 @@ object P3BoardCover {
 			//printBoard(board)
 			return 1
 		}
-		(0 until coverTypes.size).map { coverType =>
+		coverTypes.indices.map { coverType =>
 			val ret =
 				if (set(board, y, x, coverType, 1)) solve(board)
 				else 0
@@ -89,8 +89,8 @@ object P3BoardCover {
 		val source = Source.fromString(in).getLines()
 		val testCount = source.next.toInt
 		(1 to testCount).foreach { testNo =>
-			val Array(rowCnt, colCnt) = (source.next.split(' ').map(_.toInt))
-			val board = (0 until rowCnt).map { y =>
+			val Array(rowCnt, _) = source.next.split(' ').map(_.toInt)
+			val board = (0 until rowCnt).map { _ =>
 				source.next.map(x => if (x == '#') 1 else 0).toArray
 			}.toArray
 

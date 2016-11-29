@@ -9,6 +9,14 @@ object P4ClockSync {
 
 	import scala.io._
 
+	implicit class IntAddedTimes(n: Int) {
+		def times(block: => Unit): Unit = {
+			(1 to n).foreach(_ => block)
+		}
+	}
+
+	val MaxCnt: Int = Int.MaxValue / 2
+
 	val switches = Vector(
 		Vector(0, 1, 2),
 		Vector(3, 7, 9, 11),
@@ -34,25 +42,14 @@ object P4ClockSync {
 		}
 	}
 
-	def solve(switchCnts: Array[Int], watches: Array[Int], cur: Int = 0): Int = {
-		if (switchCnts sameElements  Array(0, 0, 0, 0, 0, 0, 0, 0, 2, 0)) {
-			println(cur)
-			watches.foreach(print)
-			println()
-		}
-		if (cur == switchCnts.length) {
-			val min = if (watches.forall(_ == 0)) {
-				return switchCnts.sum
-			} else {
-				Int.MaxValue
-			}
-			return min
+	def solve(watches: Array[Int], cur: Int = 0): Int = {
+		if (cur == switches.length) {
+			return if (watches.forall(_ == 0)) 0 else MaxCnt
 		}
 
 		(0 until 4).map { n =>
-			switchCnts(cur) = n
 			applySwitch(cur, watches, n)
-			val value = solve(switchCnts, watches, cur + 1)
+			val value = n + solve(watches, cur + 1)
 			applySwitch(cur, watches, -n)
 			value
 		}.min
@@ -63,10 +60,10 @@ object P4ClockSync {
 		val testCount = source.next.toInt
 		(1 to testCount).foreach {
 			testNo =>
-				val board = source.next.split(" ").map(n => Math.floorMod(n.toInt / 3, 4))
+				val watches = source.next.split(" ").map(n => Math.floorMod(n.toInt / 3, 4))
 
 				println(s"-- testCase $testNo --")
-				println(solve(new Array(switches.length), board))
+				println(solve(watches))
 		}
 	}
 }

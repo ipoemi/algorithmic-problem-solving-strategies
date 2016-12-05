@@ -1,9 +1,9 @@
-package ch06
+package ch07
 
 /**
 	* Created by ipoemi on 2016-11-30.
 	*/
-object P5QuadTree {
+object P1QuadTree {
 
 	import scala.io._
 

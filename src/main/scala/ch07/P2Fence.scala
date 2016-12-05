@@ -1,12 +1,9 @@
-package ch06
-
-import scala.annotation.tailrec
-import scala.util.Try
+package ch07
 
 /**
 	* Created by ipoemi on 2016-11-30.
 	*/
-object P6Fence {
+object P2Fence {
 
 	import scala.io._
 

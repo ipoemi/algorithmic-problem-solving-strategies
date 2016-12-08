@@ -1,6 +1,7 @@
 package ch08
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /**
 	* Created by ipoemi on 2016-12-05.
@@ -45,9 +46,28 @@ object P4LIS {
 			cache(idx + 1).get
 		}
 
-		Seq(0 to 100).find(_ == 2)
-
 		aux(-1) - 1
+	}
+
+	def solve2(seq: Seq[Int]): Int = {
+		if (seq.isEmpty) return 0
+
+		val buffer = new ArrayBuffer[Int]()
+
+		var idx = 0
+
+		buffer += seq(idx)
+		idx += 1
+
+		while (idx < seq.size) {
+			if (buffer(buffer.size - 1) < seq(idx)) buffer += seq(idx)
+			else {
+				val idx1 = buffer.indexWhere(_ > seq(idx))
+				buffer(idx1) = seq(idx)
+			}
+			idx += 1
+		}
+		buffer.size
 	}
 
 	def main(args: Array[String]): Unit = {
@@ -61,6 +81,7 @@ object P4LIS {
 				println(s"-- testCase $testNo --")
 				println(s"Sequence: $sequence")
 				println(solve(sequence))
+				println(solve2(sequence))
 		}
 	}
 

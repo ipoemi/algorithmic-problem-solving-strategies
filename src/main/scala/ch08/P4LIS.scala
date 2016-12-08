@@ -1,5 +1,6 @@
 package ch08
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
@@ -50,9 +51,21 @@ object P4LIS {
 	}
 
 	def solve2(seq: Seq[Int]): Int = {
+
 		if (seq.isEmpty) return 0
 
 		val buffer = new ArrayBuffer[Int]()
+
+		def findMinUpper(start: Int, end: Int, elem: Int): Int = {
+			//println(s"start: $start, end: $end")
+			if (start > end) return -1
+			if (start == end) return if (elem <= buffer(start)) start else -1
+			val half = start + end / 2
+			if (buffer(half) < elem && buffer(half + 1) > elem) half
+			else if (buffer(half) < elem) findMinUpper(half, end, elem)
+			else findMinUpper(start, half, elem)
+		}
+
 
 		var idx = 0
 
@@ -60,9 +73,12 @@ object P4LIS {
 		idx += 1
 
 		while (idx < seq.size) {
+			//println(s"idx: $idx, buffer-size: ${buffer.size}")
 			if (buffer(buffer.size - 1) < seq(idx)) buffer += seq(idx)
 			else {
-				val idx1 = buffer.indexWhere(_ > seq(idx))
+				val idx1 = findMinUpper(0, buffer.size - 1, seq(idx))
+				//println(s"buffer: $buffer, elem: ${seq(idx)}")
+				//println(s"idx1: $idx1")
 				buffer(idx1) = seq(idx)
 			}
 			idx += 1
@@ -73,7 +89,7 @@ object P4LIS {
 	def main(args: Array[String]): Unit = {
 		val source = Source.fromString(in).getLines()
 		val testCount = source.next().toInt
-		(1 to testCount).foreach {
+		(1 to testCount).take(3).foreach {
 			testNo =>
 				val _ = source.next()
 				val sequence = source.next().split(" ").toVector.map(_.toInt)

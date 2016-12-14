@@ -3,9 +3,10 @@ package ch09
 import scala.collection.mutable
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P1Packing {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P01Packing {
 
 	import scala.io._
 
@@ -27,7 +28,22 @@ object P1Packing {
 			|encyclopedia 10 4
 			|""".stripMargin
 
-	case class Item(name: String, volume: Int, need: Int)
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).foreach { testNo =>
+			val Array(itemCnt, capacity) = source.next().split(" ").map(_.toInt)
+			val itemList = (0 until itemCnt).map { _ =>
+				val line = source.next().split(" ")
+				Item(line(0), line(1).toInt, line(2).toInt)
+			}.toVector
+
+			println(s"-- testCase $testNo --")
+			//println(s"Items:")
+			//itemList.foreach(println)
+			println(solve(itemList, capacity))
+		}
+	}
 
 	def solve(itemList: Seq[Item], capacity: Int): String = {
 		val cache: mutable.HashMap[(Int, Int), Int] = mutable.HashMap()
@@ -40,8 +56,7 @@ object P1Packing {
 				val cand2 =
 					if (remainCapacity >= item.volume) {
 						pack(itemIdx + 1, remainCapacity - item.volume) + item.need
-					}
-					else 0
+					} else 0
 				cand1.max(cand2)
 			})
 		}
@@ -64,21 +79,6 @@ object P1Packing {
 		resultBuilder.toString
 	}
 
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val Array(itemCnt, capacity) = source.next().split(" ").map(_.toInt)
-			val itemList = (0 until itemCnt).map { _ =>
-				val line = source.next().split(" ")
-				Item(line(0), line(1).toInt, line(2).toInt)
-			}.toVector
-
-			println(s"-- testCase $testNo --")
-			//println(s"Items:")
-			//itemList.foreach(println)
-			println(solve(itemList, capacity))
-		}
-	}
+	case class Item(name: String, volume: Int, need: Int)
 
 }

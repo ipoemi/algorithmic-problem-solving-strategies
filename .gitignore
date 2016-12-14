@@ -7,7 +7,9 @@ target/
 lib_managed/
 src_managed/
 project/boot/
-.history
 .cache
 
 /.idea/
+/.classpath
+/.project
+/.settings/org.eclipse.core.resources.prefs

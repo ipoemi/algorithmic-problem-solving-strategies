@@ -3,8 +3,9 @@ package ch08
 import scala.collection.mutable
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
+ * Created by ipoemi on 2016-12-05.
+ */
+
 object P12Polyomino {
 
 	import scala.io._
@@ -17,6 +18,18 @@ object P12Polyomino {
 			|""".stripMargin
 
 	val Mod: Int = 10000000
+
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).foreach { testNo =>
+			val n = source.next().toInt
+
+			println(s"-- testCase $testNo --")
+			//println(s"N: $n")
+			println(solve(n))
+		}
+	}
 
 	def solve(n: Int): Int = {
 
@@ -32,18 +45,6 @@ object P12Polyomino {
 		}
 
 		(1 to n).map(aux(n, _)).fold(0)((n1, n2) => (n1 % Mod + n2 % Mod) % Mod)
-	}
-
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val n = source.next().toInt
-
-			println(s"-- testCase $testNo --")
-			//println(s"N: $n")
-			println(solve(n))
-		}
 	}
 
 }

@@ -1,11 +1,10 @@
 package ch06
 
-import scala.collection.mutable.ArrayBuffer
-
 /**
-	* Created by ipoemi on 2016-11-26.
-	*/
-object P1Boggle {
+ * Created by ipoemi on 2016-11-26.
+ */
+
+object P01Boggle {
 
 	import scala.io._
 

@@ -3,9 +3,10 @@ package ch07
 import scala.collection.mutable.ArrayBuffer
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P3FanMeeting {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P03FanMeeting {
 
 	import scala.io._
 
@@ -29,27 +30,31 @@ object P3FanMeeting {
 			|2
 		""".stripMargin
 
-	object IntList {
-		def apply(from: String) = new IntList(from.map(_.toString.toInt))
-		def apply(from: Seq[Int]) = new IntList(from)
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next.toInt
+		(1 to testCount).foreach {
+			testNo =>
+				val members = source.next()
+				val fans = source.next()
+
+				println(s"-- testCase $testNo --")
+				println(s"Members: $members")
+				println(s"Fans: $fans")
+
+				val membersInt = members.map(x => if (x == 'M') '1' else '0')
+				val fansInt = fans.map(x => if (x == 'M') '1' else '0')
+				val membersIntList = IntList(membersInt.reverse)
+				val fansIntList = IntList(fansInt)
+				val mulRet = membersIntList * fansIntList
+				println(mulRet.toString.split(" ").slice(membersIntList.size - 1, fansIntList.size).map(_.toInt).count(_ == 0))
+		}
 	}
 
 	class IntList(from: Seq[Int]) {
 		private val KaratsubaThreshold = 50
 
 		private val elems = from.toVector.reverse
-
-		private def multiply(that: IntList): IntList = {
-			val ret = ArrayBuffer.fill(this.size.max(that.size))(0)
-			for (i <- elems.indices)
-				for (j <- that.elems.indices) {
-					if (i + j >= ret.size) ret += 0
-					ret(i + j) += elems(i) * that.elems(j)
-				}
-			//println(s"i1: ${elems}, i2: ${that.elems}")
-			//println(s"multi: ${ret}")
-			IntList(ret.reverse)
-		}
 
 		def *(that: IntList): IntList = {
 			if (this.size < that.size) return that * this
@@ -96,27 +101,24 @@ object P3FanMeeting {
 		override def toString: String = {
 			elems.reverse.mkString(" ")
 		}
+
+		private def multiply(that: IntList): IntList = {
+			val ret = ArrayBuffer.fill(this.size.max(that.size))(0)
+			for (i <- elems.indices)
+				for (j <- that.elems.indices) {
+					if (i + j >= ret.size) ret += 0
+					ret(i + j) += elems(i) * that.elems(j)
+				}
+			//println(s"i1: ${elems}, i2: ${that.elems}")
+			//println(s"multi: ${ret}")
+			IntList(ret.reverse)
+		}
 	}
 
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next.toInt
-		(1 to testCount).foreach {
-			testNo =>
-				val members = source.next()
-				val fans = source.next()
+	object IntList {
+		def apply(from: String) = new IntList(from.map(_.toString.toInt))
 
-				println(s"-- testCase $testNo --")
-				println(s"Members: $members")
-				println(s"Fans: $fans")
-
-				val membersInt = members.map(x => if (x == 'M') '1' else '0')
-				val fansInt = fans.map(x => if (x == 'M') '1' else '0')
-				val membersIntList = IntList(membersInt.reverse)
-				val fansIntList = IntList(fansInt)
-				val mulRet = membersIntList * fansIntList
-				println(mulRet.toString.split(" ").slice(membersIntList.size - 1, fansIntList.size).map(_.toInt).count(_ == 0))
-		}
+		def apply(from: Seq[Int]) = new IntList(from)
 	}
 
 }

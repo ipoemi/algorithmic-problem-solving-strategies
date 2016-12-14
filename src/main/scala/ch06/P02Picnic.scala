@@ -1,13 +1,10 @@
 package ch06
 
-import java.io.{BufferedReader, StringReader}
-
-import scala.annotation.tailrec
-
 /**
-	* Created by ipoemi on 2016-11-24.
-	*/
-object P2Picnic {
+ * Created by ipoemi on 2016-11-24.
+ */
+
+object P02Picnic {
 
 	import scala.io._
 

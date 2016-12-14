@@ -1,9 +1,10 @@
 package ch08
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P7Quantization {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P07Quantization {
 
 	import scala.io._
 
@@ -14,6 +15,20 @@ object P7Quantization {
 			|9 3
 			|1 744 755 4 897 902 890 6 777
 			|""".stripMargin
+
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).foreach { testNo =>
+			val Array(_, partCnt) = source.next().split(" ").map(_.toInt)
+			val nums = source.next().split("\\s+").map(_.toInt).toVector
+
+			println(s"-- testCase $testNo --")
+			println(s"Parts: $partCnt")
+			println(s"Nums: $nums")
+			println(solve(nums, partCnt))
+		}
+	}
 
 	def solve(nums: Seq[Int], partCnt: Int): Int = {
 		val MaxValue = Int.MaxValue / 2
@@ -50,20 +65,6 @@ object P7Quantization {
 		}
 
 		aux(0, partCnt)
-	}
-
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val Array(_, partCnt) = source.next().split(" ").map(_.toInt)
-			val nums = source.next().split("\\s+").map(_.toInt).toVector
-
-			println(s"-- testCase $testNo --")
-			println(s"Parts: $partCnt")
-			println(s"Nums: $nums")
-			println(solve(nums, partCnt))
-		}
 	}
 
 }

@@ -1,9 +1,10 @@
 package ch07
 
 /**
-	* Created by ipoemi on 2016-11-30.
-	*/
-object P1QuadTree {
+ * Created by ipoemi on 2016-11-30.
+ */
+
+object P01Quadtree {
 
 	import scala.io._
 
@@ -39,12 +40,6 @@ object P1QuadTree {
 			decompress(decompressed, strIter, y + half, x + half, half)
 		}
 	}
-
-	trait QuadTree
-
-	case class Leaf(char: Char) extends QuadTree
-
-	case class Node(n1: QuadTree, n2: QuadTree, n3: QuadTree, n4: QuadTree) extends QuadTree
 
 	def buildTree(strIter: Iterator[Char]): QuadTree = {
 		val head = strIter.next()
@@ -92,4 +87,11 @@ object P1QuadTree {
 				println(s"Reverse Compressed String: ${reverse(compressedStr.toIterator)}")
 		}
 	}
+
+	trait QuadTree
+
+	case class Leaf(char: Char) extends QuadTree
+
+	case class Node(n1: QuadTree, n2: QuadTree, n3: QuadTree, n4: QuadTree) extends QuadTree
+
 }

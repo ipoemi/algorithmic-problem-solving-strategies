@@ -1,9 +1,10 @@
 package ch07
 
 /**
-	* Created by ipoemi on 2016-11-30.
-	*/
-object P2Fence {
+ * Created by ipoemi on 2016-11-30.
+ */
+
+object P02Fence {
 
 	import scala.io._
 

@@ -3,9 +3,10 @@ package ch08
 import scala.collection.mutable
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P9TrianglePathCount {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P09TrianglePathCount {
 
 	import scala.io._
 
@@ -22,6 +23,21 @@ object P9TrianglePathCount {
 			|1 3 2
 			|3 5 5 6
 			|""".stripMargin
+
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).foreach { testNo =>
+			val cnt = source.next().toInt
+			val triangle = (0 until cnt).map(_ => source.next().split(" ").toVector.map(_.toInt)).toVector
+
+			println(s"-- testCase $testNo --")
+			//println(s"Cnt: $cnt")
+			//println(s"Triangle:")
+			//triangle.foreach { line => line.foreach(n => print(s"$n ")); println() }
+			println(solve(triangle))
+		}
+	}
 
 	def solve(triangle: Seq[Seq[Int]]): Int = {
 		val pathCache: mutable.HashMap[(Int, Int), Int] = mutable.HashMap()
@@ -48,21 +64,6 @@ object P9TrianglePathCount {
 
 		countAux(0, 0)
 
-	}
-
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val cnt = source.next().toInt
-			val triangle = (0 until cnt).map(_ => source.next().split(" ").toVector.map(_.toInt)).toVector
-
-			println(s"-- testCase $testNo --")
-			//println(s"Cnt: $cnt")
-			//println(s"Triangle:")
-			//triangle.foreach { line => line.foreach(n => print(s"$n ")); println() }
-			println(solve(triangle))
-		}
 	}
 
 }

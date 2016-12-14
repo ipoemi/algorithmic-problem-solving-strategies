@@ -1,9 +1,10 @@
 package ch08
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P8Tiling2 {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P08Tiling2 {
 
 	import scala.io._
 
@@ -15,6 +16,18 @@ object P8Tiling2 {
 			|""".stripMargin
 
 	val Mod = 1000000007
+
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).foreach { testNo =>
+			val n = source.next().toInt
+
+			println(s"-- testCase $testNo --")
+			println(s"n: $n")
+			println(solve(n))
+		}
+	}
 
 	def solve(n: Int): Int = {
 		val cache: Array[Option[Int]] = Array.fill(n + 1)(None)
@@ -28,18 +41,6 @@ object P8Tiling2 {
 		}
 
 		aux(n)
-	}
-
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val n = source.next().toInt
-
-			println(s"-- testCase $testNo --")
-			println(s"n: $n")
-			println(solve(n))
-		}
 	}
 
 }

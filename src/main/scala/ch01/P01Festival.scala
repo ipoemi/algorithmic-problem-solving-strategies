@@ -3,9 +3,10 @@ package ch01
 import scala.annotation.tailrec
 
 /**
-	* Created by ipoemi on 2016-11-26.
-	*/
-object P1Festival {
+ * Created by ipoemi on 2016-11-26.
+ */
+
+object P01Festival {
 
 	import scala.io._
 

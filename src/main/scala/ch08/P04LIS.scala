@@ -1,13 +1,12 @@
 package ch08
 
-import scala.annotation.tailrec
-import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
-	* Created by ipoemi on 2016-12-05.
-	*/
-object P4LIS {
+ * Created by ipoemi on 2016-12-05.
+ */
+
+object P04LIS {
 
 	import scala.io._
 
@@ -31,6 +30,21 @@ object P4LIS {
 		})
 	}
 	*/
+
+	def main(args: Array[String]): Unit = {
+		val source = Source.fromString(in).getLines()
+		val testCount = source.next().toInt
+		(1 to testCount).take(3).foreach {
+			testNo =>
+				val _ = source.next()
+				val sequence = source.next().split(" ").toVector.map(_.toInt)
+
+				println(s"-- testCase $testNo --")
+				println(s"Sequence: $sequence")
+				println(solve(sequence))
+				println(solve2(sequence))
+		}
+	}
 
 	def solve(seq: Seq[Int]): Int = {
 		if (seq.isEmpty) return 0
@@ -84,21 +98,6 @@ object P4LIS {
 			idx += 1
 		}
 		buffer.size
-	}
-
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).take(3).foreach {
-			testNo =>
-				val _ = source.next()
-				val sequence = source.next().split(" ").toVector.map(_.toInt)
-
-				println(s"-- testCase $testNo --")
-				println(s"Sequence: $sequence")
-				println(solve(sequence))
-				println(solve2(sequence))
-		}
 	}
 
 }

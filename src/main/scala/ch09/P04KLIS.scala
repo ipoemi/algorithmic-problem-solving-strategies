@@ -1,7 +1,7 @@
 package ch09
 
 import scala.annotation.tailrec
-import scala.collection.mutable
+import com.util.memoize
 
 /**
  * Created by ipoemi on 2016-12-05.
@@ -77,10 +77,6 @@ object P04KLIS {
 		}
 
 		s"${lisAux(-1) - 1}\n${kthAux(-1, k, Vector()).mkString(" ")}"
-	}
-
-	def memoize[I, O](f: I => O): collection.Map[I, O] = new mutable.HashMap[I, O]() {
-		override def apply(key: I): O = getOrElseUpdate(key, f(key))
 	}
 
 }

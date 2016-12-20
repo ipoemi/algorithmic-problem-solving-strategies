@@ -1,6 +1,6 @@
 package ch09
 
-import scala.collection.mutable
+import com.util.memoize
 
 /**
  * Created by ipoemi on 2016-12-05.
@@ -67,10 +67,6 @@ object P03Morse {
 		if (n == 0) return "o" * m
 		if (k <= bino(n + m - 1, n - 1)) return "-" + solve3(n - 1, m, k)
 		"o" + solve3(n, m - 1, k - bino(n + m - 1, n - 1))
-	}
-
-	def memoize[I, O](f: I => O): collection.Map[I, O] = new mutable.HashMap[I, O]() {
-		override def apply(key: I): O = getOrElseUpdate(key, f(key))
 	}
 
 	lazy val bino: (Int, Int) => Int = Function.untupled(memoize {

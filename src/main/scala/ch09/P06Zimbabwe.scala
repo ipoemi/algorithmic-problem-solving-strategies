@@ -40,10 +40,10 @@ object P06Zimbabwe {
 		lazy val priceAux: (Int, Int, Int, Boolean) => (Int) = Function.untupled(memoize {
 			case (idx, _, mod, less) if idx == digitColl.size => if (mod == 0 && less) 1 else 0
 			case (idx, taken, mod, less) =>
-				digitColl.indices.filter {
-					i => (taken & (1 << i)) == 0
-				}.filter {
-					i => less || priceColl(idx) >= digitColl(i)
+				digitColl.indices.filter { i =>
+					(taken & (1 << i)) == 0
+				}.filter { i =>
+					less || priceColl(idx) >= digitColl(i)
 				}.filter { i =>
 					i == 0 || digitColl(i - 1) != digitColl(i) || (taken & (1 << (i - 1))) != 0
 				}.map { i =>

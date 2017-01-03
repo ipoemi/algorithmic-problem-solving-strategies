@@ -1,9 +1,5 @@
 package ch08
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P05JLIS {
 
 	import scala.io._

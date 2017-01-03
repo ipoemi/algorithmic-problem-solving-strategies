@@ -2,25 +2,25 @@ package ch09
 
 import com.util.memoize
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P03Morse {
 
 	import scala.io._
 
+	lazy val bino: (Int, Int) => Int = Function.untupled(memoize {
+		case (_, 0) => 1
+		case (n, r) if n == r => 1
+		case (n, r) => M.min(bino(n - 1, r - 1) + bino(n - 1, r))
+	})
 	val in: String =
 		"""3
 			|2 2 4
 			|4 8 13
 			|6 4 1
 			|""".stripMargin
-
 	val NMLimit: Int = 100
 	val KLimit: Int = 1000000000
-	val M: Int = KLimit + NMLimit
 	//val bino = Array.fill(NMLimit * NMLimit + 1, NMLimit * NMLimit + 1)(0)
+	val M: Int = KLimit + NMLimit
 
 	def main(args: Array[String]): Unit = {
 		val source = Source.fromString(in).getLines()
@@ -68,10 +68,4 @@ object P03Morse {
 		if (k <= bino(n + m - 1, n - 1)) return "-" + solve3(n - 1, m, k)
 		"o" + solve3(n, m - 1, k - bino(n + m - 1, n - 1))
 	}
-
-	lazy val bino: (Int, Int) => Int = Function.untupled(memoize {
-		case (_, 0) => 1
-		case (n, r) if n == r => 1
-		case (n, r) => M.min(bino(n - 1, r - 1) + bino(n - 1, r))
-	})
 }

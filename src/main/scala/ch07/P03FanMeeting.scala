@@ -2,10 +2,6 @@ package ch07
 
 import scala.collection.mutable.ArrayBuffer
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P03FanMeeting {
 
 	import scala.io._

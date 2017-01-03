@@ -1,9 +1,5 @@
 package ch07
 
-/**
- * Created by ipoemi on 2016-11-30.
- */
-
 object P01Quadtree {
 
 	import scala.io._

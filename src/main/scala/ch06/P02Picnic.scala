@@ -1,9 +1,5 @@
 package ch06
 
-/**
- * Created by ipoemi on 2016-11-24.
- */
-
 object P02Picnic {
 
 	import scala.io._

@@ -1,9 +1,5 @@
 package ch09
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P06Zimbabwe {
 
 	import com.util.memoize

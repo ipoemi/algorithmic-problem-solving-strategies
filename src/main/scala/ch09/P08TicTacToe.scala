@@ -1,8 +1,5 @@
 package ch09
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
 object P08TicTacToe {
 
 	import com.util.memoize
@@ -35,6 +32,33 @@ object P08TicTacToe {
 		}
 	}
 
+	def solve(board: Seq[Seq[Char]]): String = {
+		lazy val canWin: (Seq[Seq[Char]], Char) => Int = Function.untupled(memoize {
+			case (b, t) if isFinished(b, switchTurn(t)) => -1
+			case (b, t) =>
+				val valueColl = getPossiblePos(b).map { pos =>
+					val newBoard = replace(b, pos, t)
+					val value = canWin(newBoard, switchTurn(t))
+					value
+				}
+				val minValue = (valueColl :+ 2).min
+				if (minValue == 2 || minValue == 0) 0
+				else -minValue
+		})
+
+		val turn = getNextTurn(board)
+		//println(s"next turn: $turn")
+		(canWin(board, turn) match {
+			case 1 => turn
+			case 0 => "TIE"
+			case _ => switchTurn(turn)
+		}).toString
+	}
+
+	def isFinished(board: Seq[Seq[Char]], turn: Char): Boolean = {
+		(board ++ board.transpose ++ getDiagonals(board)).exists(_.forall(_ == turn))
+	}
+
 	def getDiagonals(board: Seq[Seq[Char]]): Seq[Seq[Char]] = {
 		board match {
 			case Seq(
@@ -42,10 +66,6 @@ object P08TicTacToe {
 			Seq(_, b2, _),
 			Seq(a3, _, c3)) => Seq(Seq(a1, b2, c3), Seq(c1, b2, a3))
 		}
-	}
-
-	def isFinished(board: Seq[Seq[Char]], turn: Char): Boolean = {
-		(board ++ board.transpose ++ getDiagonals(board)).exists(_.forall(_ == turn))
 	}
 
 	def getNextTurn(board: Seq[Seq[Char]]): Char = {
@@ -74,29 +94,6 @@ object P08TicTacToe {
 				row
 			}
 		}
-	}
-
-	def solve(board: Seq[Seq[Char]]): String = {
-		lazy val canWin: (Seq[Seq[Char]], Char) => Int = Function.untupled(memoize {
-			case (b, t) if isFinished(b, switchTurn(t)) => -1
-			case (b, t) =>
-				val valueColl = getPossiblePos(b).map { pos =>
-					val newBoard = replace(b, pos, t)
-					val value = canWin(newBoard, switchTurn(t))
-					value
-				}
-				val minValue = (valueColl :+ 2).min
-				if (minValue == 2 || minValue == 0) 0
-				else -minValue
-		})
-
-		val turn = getNextTurn(board)
-		//println(s"next turn: $turn")
-		(canWin(board, turn) match {
-			case 1 => turn
-			case 0 => "TIE"
-			case _ => switchTurn(turn)
-		}).toString
 	}
 
 }

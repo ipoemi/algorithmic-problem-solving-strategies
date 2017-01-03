@@ -1,16 +1,11 @@
 package ch09
 
-import scala.annotation.tailrec
-
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P07Restore {
 
 	import com.util.memoize
-	import scala.io._
+
 	import scala.collection.mutable.ArrayBuffer
+	import scala.io._
 
 
 	val in: String =
@@ -47,27 +42,6 @@ object P07Restore {
 		}
 	}
 
-	def getOverlapCnt(a: String, b: String): Int = {
-		val cnt = a.length.min(b.length)
-		var maxMatch = 0
-		(0 until cnt).foreach { i =>
-			if ((0 to i).forall(n => a(a.length - 1 - n) == b(i - n)))
-				maxMatch = i + 1
-		}
-		maxMatch
-		/*
-		val diff = a.length - b.length
-		val (newA, newB) =
-			if (diff >= 0) (a.drop(diff), b)
-			else (a, b.take(-diff))
-		(0 until newA.size).map { n =>
-			val droppedA = newA.drop(n)
-			if (droppedA.zip(newB).forall(z => z._1 == z._2)) droppedA.length
-			else 0
-		}.max
-		*/
-	}
-
 	def solve(wordColl: Seq[String]): String = {
 		lazy val overlapAux: (Int, Int) => (Int) = Function.untupled(memoize {
 			case (_, used) if used == ((1 << wordColl.size) - 1) => 0
@@ -98,6 +72,27 @@ object P07Restore {
 		//wordColl.indices.map(overlapAux(_, 0)).max.toString
 		//overlapAux(-1, 0).toString
 		getShortestWords(-1, 0)
+	}
+
+	def getOverlapCnt(a: String, b: String): Int = {
+		val cnt = a.length.min(b.length)
+		var maxMatch = 0
+		(0 until cnt).foreach { i =>
+			if ((0 to i).forall(n => a(a.length - 1 - n) == b(i - n)))
+				maxMatch = i + 1
+		}
+		maxMatch
+		/*
+		val diff = a.length - b.length
+		val (newA, newB) =
+			if (diff >= 0) (a.drop(diff), b)
+			else (a, b.take(-diff))
+		(0 until newA.size).map { n =>
+			val droppedA = newA.drop(n)
+			if (droppedA.zip(newB).forall(z => z._1 == z._2)) droppedA.length
+			else 0
+		}.max
+		*/
 	}
 
 }

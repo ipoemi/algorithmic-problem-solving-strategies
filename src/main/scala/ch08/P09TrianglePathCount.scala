@@ -2,10 +2,6 @@ package ch08
 
 import scala.collection.mutable
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P09TrianglePathCount {
 
 	import scala.io._

@@ -2,10 +2,6 @@ package ch09
 
 import scala.collection.mutable
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P02OCR {
 
 	import scala.io._

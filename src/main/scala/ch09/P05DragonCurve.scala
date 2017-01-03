@@ -2,16 +2,16 @@ package ch09
 
 import scala.annotation.tailrec
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
-
 object P05DragonCurve {
 
 	import com.util.memoize
 
 	import scala.io._
 
+	lazy val count: (Int) => (Int) = memoize {
+		case 0 => 1
+		case n1 => MaxValue.min(count(n1 - 1) * 2 + 2)
+	}
 	val in: String =
 		"""4
 			|0 1 2
@@ -19,7 +19,6 @@ object P05DragonCurve {
 			|2 6 5
 			|42 764853475 30
 			|""".stripMargin
-
 	val MaxValue: Int = 1000000000 + 1
 
 	def main(args: Array[String]): Unit = {
@@ -33,20 +32,6 @@ object P05DragonCurve {
 			println(solve(n, p, l))
 
 		}
-	}
-
-	def curve(seed: String, level: Int): String = {
-		if (level == 0) return seed
-		seed.flatMap {
-			case 'X' => curve("X+YF", level - 1)
-			case 'Y' => curve("FX-Y", level - 1)
-			case other => other.toString
-		}.mkString
-	}
-
-	lazy val count: (Int) => (Int) = memoize {
-		case 0 => 1
-		case n1 => MaxValue.min(count(n1 - 1) * 2 + 2)
 	}
 
 	def solve(n: Int, p: Int, l: Int): String = {
@@ -72,6 +57,15 @@ object P05DragonCurve {
 
 		(0 until l).map(lN => kthAux("FX", n, p - 1 + lN)).mkString
 
+	}
+
+	def curve(seed: String, level: Int): String = {
+		if (level == 0) return seed
+		seed.flatMap {
+			case 'X' => curve("X+YF", level - 1)
+			case 'Y' => curve("FX-Y", level - 1)
+			case other => other.toString
+		}.mkString
 	}
 
 }

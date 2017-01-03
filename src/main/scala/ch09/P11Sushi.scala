@@ -2,9 +2,6 @@ package ch09
 
 import scala.annotation.tailrec
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
 object P11Sushi {
 
 	import scala.io._
@@ -31,8 +28,6 @@ object P11Sushi {
 	val MaxBudget = 1000000000
 	val MaxPrice = 20000
 
-	case class Sushi(price: Int, pref: Int)
-
 	def main(args: Array[String]): Unit = {
 		val source = Source.fromString(in).getLines()
 		val testCount = source.next().toInt
@@ -54,6 +49,7 @@ object P11Sushi {
 	def solve(sushiColl: Seq[Sushi], budget: Int): String = {
 		val newSushiColl = sushiColl.map(sushi => sushi.copy(price = sushi.price / 100))
 		val newBudget = budget / 100
+
 		/*
 		var ret = 0
 		val iterim = Array.fill(201)(0)
@@ -76,8 +72,11 @@ object P11Sushi {
 				aux(auxBudget + 1, auxTmp.updated(auxBudget % 201, cand), auxResult.max(cand))
 			}
 		}
+
 		aux(0, Vector.fill(201)(0), 0).toString
 	}
+
+	case class Sushi(price: Int, pref: Int)
 
 }
 

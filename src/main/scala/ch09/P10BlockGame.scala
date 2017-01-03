@@ -3,15 +3,11 @@ package ch09
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
-/**
-	* Created by ipoemi on 2016-12-05.
-	*/
 object P10BlockGame {
-
-	import com.util.memoize
 
 	import scala.io._
 
+	type Board = Seq[Seq[Boolean]]
 	val in: String =
 		"""3
 			|.....
@@ -30,11 +26,26 @@ object P10BlockGame {
 			|#...#
 			|##.##
 			|""".stripMargin
-
 	val RowCnt = 5
 	val ColCnt = 5
-
-	type Board = Seq[Seq[Boolean]]
+	val moveColl: Seq[Int] = {
+		val buffer = new ListBuffer[Int]
+		for (y <- 0 until RowCnt; x <- 0 until ColCnt - 1) {
+			buffer += (cell(y, x) + cell(y, x + 1))
+			buffer += (cell(x, y) + cell(x + 1, y))
+		}
+		for (y <- 0 until RowCnt - 1; x <- 0 until ColCnt - 1) {
+			val blockColl = for (dy <- 0 until 2; dx <- 0 until 2) yield {
+				cell(y + dy, x + dx)
+			}
+			val entire = blockColl.foldLeft(0) { (result, block) => result | block }
+			for (block <- blockColl) {
+				buffer += (entire - block)
+			}
+		}
+		buffer.result()
+	}
+	val cache: mutable.HashMap[Int, Boolean] = mutable.HashMap[Int, Boolean]()
 
 	def main(args: Array[String]): Unit = {
 		val source = Source.fromString(in).getLines()
@@ -96,27 +107,6 @@ object P10BlockGame {
 		result
 	}
 
-	@inline
-	def cell(y: Int, x: Int): Int = 1 << (y * ColCnt + x)
-
-	val moveColl: Seq[Int] = {
-		val buffer = new ListBuffer[Int]
-		for (y <- 0 until RowCnt; x <- 0 until ColCnt - 1) {
-			buffer += (cell(y, x) + cell(y, x + 1))
-			buffer += (cell(x, y) + cell(x + 1, y))
-		}
-		for (y <- 0 until RowCnt - 1; x <- 0 until ColCnt - 1) {
-			val blockColl = for (dy <- 0 until 2; dx <- 0 until 2) yield {
-				cell(y + dy, x + dx)
-			}
-			val entire = blockColl.foldLeft(0) { (result, block) => result | block }
-			for (block <- blockColl) {
-				buffer += (entire - block)
-			}
-		}
-		buffer.result()
-	}
-
 	//println(moveColl.size)
 
 	//println(moveColl.size)
@@ -132,9 +122,10 @@ object P10BlockGame {
 	*/
 
 	@inline
-	def canMove(encodedBoard: Int, move: Int): Boolean = (encodedBoard & move) == 0
+	def cell(y: Int, x: Int): Int = 1 << (y * ColCnt + x)
 
-	val cache = mutable.HashMap[Int, Boolean]()
+	@inline
+	def canMove(encodedBoard: Int, move: Int): Boolean = (encodedBoard & move) == 0
 
 	def play: (Int) => Boolean = {
 		case b if cache.get(b).nonEmpty => cache(b)
@@ -168,9 +159,10 @@ object P10BlockGame {
 		}
 		*/
 
-		play(encodedBoard) match {
-			case true => "WINNING"
-			case _ => "LOSING"
+		if (play(encodedBoard)) {
+			"WINNING"
+		} else {
+			"LOSING"
 		}
 	}
 }

@@ -1,11 +1,8 @@
 package ch09
 
-import scala.annotation.tailrec
 import com.util.memoize
 
-/**
- * Created by ipoemi on 2016-12-05.
- */
+import scala.annotation.tailrec
 
 object P04KLIS {
 

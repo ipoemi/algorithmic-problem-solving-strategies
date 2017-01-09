@@ -5,6 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 object P04LIS {
 
 	import scala.io._
+	import com.util.indexOfMinUpper
 
 	val in: String =
 		"""3
@@ -66,17 +67,6 @@ object P04LIS {
 
 		val buffer = new ArrayBuffer[Int]()
 
-		def findMinUpper(start: Int, end: Int, elem: Int): Int = {
-			//println(s"start: $start, end: $end")
-			if (start > end) return -1
-			if (start == end) return if (elem <= buffer(start)) start else -1
-			val half = start + end / 2
-			if (buffer(half) < elem && buffer(half + 1) > elem) half
-			else if (buffer(half) < elem) findMinUpper(half, end, elem)
-			else findMinUpper(start, half, elem)
-		}
-
-
 		var idx = 0
 
 		buffer += seq(idx)
@@ -86,7 +76,7 @@ object P04LIS {
 			//println(s"idx: $idx, buffer-size: ${buffer.size}")
 			if (buffer(buffer.size - 1) < seq(idx)) buffer += seq(idx)
 			else {
-				val idx1 = findMinUpper(0, buffer.size - 1, seq(idx))
+				val idx1 = indexOfMinUpper(buffer, seq(idx))
 				//println(s"buffer: $buffer, elem: ${seq(idx)}")
 				//println(s"idx1: $idx1")
 				buffer(idx1) = seq(idx)

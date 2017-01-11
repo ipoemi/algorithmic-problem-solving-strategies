@@ -88,7 +88,7 @@ object P03BoardCover {
 				source.next.map(x => if (x == '#') 1 else 0).toArray
 			}.toArray
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(solve(board))
 		}
 	}

@@ -34,7 +34,7 @@ object P03FanMeeting {
 				val members = source.next()
 				val fans = source.next()
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Members: $members")
 				println(s"Fans: $fans")
 

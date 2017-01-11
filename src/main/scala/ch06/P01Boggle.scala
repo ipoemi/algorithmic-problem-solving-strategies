@@ -52,7 +52,7 @@ object P01Boggle {
 			val wordCount = source.next().toInt
 			val words = (0 until wordCount).map(_ => source.next())
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(s"board: ")
 			println(board)
 			println(s"wordCount: $wordCount")

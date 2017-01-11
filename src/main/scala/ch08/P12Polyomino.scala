@@ -21,7 +21,7 @@ object P12Polyomino {
 		(1 to testCount).foreach { testNo =>
 			val n = source.next().toInt
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"N: $n")
 			println(solve(n))
 		}

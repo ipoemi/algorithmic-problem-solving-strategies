@@ -22,7 +22,7 @@ object P02LunchBox {
 			val warmTimeColl = source.next().split(" ").map(_.toInt).toVector
 			val eatTimeColl = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"WarmTimes: ${warmTimeColl}")
 			//println(s"EatTimes: ${eatTimeColl}")
 			println(solve(warmTimeColl, eatTimeColl))

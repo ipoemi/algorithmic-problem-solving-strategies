@@ -33,7 +33,7 @@ object P02Picnic {
 			val friendList = tmpPairList.sliding(2, 2).toVector.map(_.sorted).map { case Seq(n1, n2) => (n1, n2) }
 
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(s"StudentCount: $studentCount, PairCount: $friendCount")
 			println(s"PairList: $friendList")
 			println(aux(0 until studentCount, friendList, Vector()))

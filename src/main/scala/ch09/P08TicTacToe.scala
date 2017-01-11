@@ -25,7 +25,7 @@ object P08TicTacToe {
 		(1 to testCount).foreach { testNo =>
 			val board = (0 until 3).toVector.map(_ => source.next().toVector)
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"board: ")
 			//board.foreach(println)
 			println(solve(board))

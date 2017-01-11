@@ -38,7 +38,7 @@ object P11Sushi {
 				Sushi(sushiSrc(0), sushiSrc(1))
 			}
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"Money = $budget")
 			//println(s"n = $n")
 			//println(s"Sushi List = $sushiColl")

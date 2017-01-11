@@ -53,7 +53,7 @@ object P10BlockGame {
 		(1 to testCount).foreach { testNo =>
 			val board = (0 until RowCnt).toVector.map(_ => source.next().toVector.map(ch => if (ch == '.') false else true))
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//board.foreach(println)
 			//val encodedBoard = encodeBoard(board)
 			//println(s"encoded board = ${encodedBoard}")

@@ -27,7 +27,7 @@ object P09TrianglePathCount {
 			val cnt = source.next().toInt
 			val triangle = (0 until cnt).map(_ => source.next().split(" ").toVector.map(_.toInt)).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"Cnt: $cnt")
 			//println(s"Triangle:")
 			//triangle.foreach { line => line.foreach(n => print(s"$n ")); println() }

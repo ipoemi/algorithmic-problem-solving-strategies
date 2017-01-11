@@ -36,7 +36,7 @@ object P04LIS {
 				val _ = source.next()
 				val sequence = source.next().split(" ").toVector.map(_.toInt)
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Sequence: $sequence")
 				println(solve(sequence))
 				println(solve2(sequence))

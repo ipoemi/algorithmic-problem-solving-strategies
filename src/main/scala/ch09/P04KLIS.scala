@@ -29,7 +29,7 @@ object P04KLIS {
 			val Array(_, k) = source.next().split(" ").map(_.toInt)
 			val seq = source.next().split(" ").map(_.toInt).toSeq
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"n = $n, k = $k")
 			//println(s"sequence: $seq")
 			println(kthLis(seq, k))

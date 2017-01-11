@@ -34,7 +34,7 @@ object P01Packing {
 				Item(line(0), line(1).toInt, line(2).toInt)
 			}.toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"Items:")
 			//itemList.foreach(println)
 			println(solve(itemList, capacity))

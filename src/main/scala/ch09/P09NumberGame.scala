@@ -23,7 +23,7 @@ object P09NumberGame {
 			val _ = source.next()
 			val numColl = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"numColl = $numColl")
 			println(solve(numColl))
 		}

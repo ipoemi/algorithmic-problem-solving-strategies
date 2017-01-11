@@ -19,7 +19,7 @@ object P07Quantization {
 			val Array(_, partCnt) = source.next().split(" ").map(_.toInt)
 			val nums = source.next().split("\\s+").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(s"Parts: $partCnt")
 			println(s"Nums: $nums")
 			println(solve(nums, partCnt))

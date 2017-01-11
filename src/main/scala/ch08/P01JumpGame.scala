@@ -43,7 +43,7 @@ object P01JumpGame {
 				val boardSize = source.next().toInt
 				val board = (0 until boardSize).map(_ => source.next().split(" ").map(_.toInt).toVector)
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				//println(s"Board: ")
 				//board.foreach { x => x.foreach(print); println() }
 				println(if (solve(board, 0, 0)) "YES" else "NO")

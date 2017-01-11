@@ -20,7 +20,7 @@ object P10Snail {
 		(1 to testCount).foreach { testNo =>
 			val Array(height, days) = source.next().split(" ").map(_.toInt)
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"Height: $height")
 			//println(s"Days: $days")
 			println(solve(days, height).formatted("%.7f"))

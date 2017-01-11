@@ -28,7 +28,7 @@ object P01MatchOver {
 			val enemyPlayerRatingColl = source.next().split(" ").map(_.toInt).toVector
 			val ourPlayerRatingColl = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"Enemy: ${enemyPlayerRatingColl}")
 			//println(s"Our: ${ourPlayerRatingColl}")
 			println(solve(enemyPlayerRatingColl, ourPlayerRatingColl))

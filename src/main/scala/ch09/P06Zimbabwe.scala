@@ -22,7 +22,7 @@ object P06Zimbabwe {
 		(1 to testCount).foreach { testNo =>
 			val Array(price, m) = source.next().split(" ")
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"price = $price, m = $m")
 			println(solve(price, m.toInt))
 

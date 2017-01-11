@@ -62,7 +62,7 @@ object P02Fence {
 				val _ = source.next().toInt
 				val fenceHeights = source.next().split(" ").map(_.toInt)
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Fence Height: ${fenceHeights.toVector}")
 				println(solve(fenceHeights, 0, fenceHeights.length - 1))
 		}

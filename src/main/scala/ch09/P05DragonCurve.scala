@@ -27,7 +27,7 @@ object P05DragonCurve {
 		(1 to testCount).foreach { testNo =>
 			val Array(n, p, l) = source.next().split(" ").map(_.toInt)
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"n = $n, p = $p, l = $l")
 			println(solve(n, p, l))
 

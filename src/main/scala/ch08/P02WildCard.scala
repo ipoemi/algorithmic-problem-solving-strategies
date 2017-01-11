@@ -36,7 +36,7 @@ object P02WildCard {
 
 				val words = (0 until wordCnt).map(_ => source.next())
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				//println(s"WildCard: $wildcard")
 				//println(s"Words: ")
 				//words.foreach(println)

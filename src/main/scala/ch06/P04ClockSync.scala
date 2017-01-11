@@ -57,7 +57,7 @@ object P04ClockSync {
 			testNo =>
 				val watches = source.next.split(" ").map(n => Math.floorMod(n.toInt / 3, 4))
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(solve(watches))
 		}
 	}

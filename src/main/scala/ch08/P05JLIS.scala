@@ -26,7 +26,7 @@ object P05JLIS {
 				val sequence1 = source.next().split(" ").toVector.map(_.toInt)
 				val sequence2 = source.next().split(" ").toVector.map(_.toInt)
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Sequence1: $sequence1")
 				println(s"Sequence2: $sequence2")
 				println(solve(sequence1, sequence2))

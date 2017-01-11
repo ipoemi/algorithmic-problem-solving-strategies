@@ -23,7 +23,7 @@ object P03StrJoin {
 			val _ = source.next().split(" ").map(_.toInt)
 			val strLengthColl = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"String Lengths: ${strLengthColl}")
 			println(solve(strLengthColl))
 		}

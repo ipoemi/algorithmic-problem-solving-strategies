@@ -34,7 +34,7 @@ object P07Restore {
 				if (wordColl.forall(!_.contains(word))) wordColl += word
 			}
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"NumOfWords = $numWords")
 			//println(s"Words:")
 			//println(wordColl)

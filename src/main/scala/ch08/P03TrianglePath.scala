@@ -38,7 +38,7 @@ object P03TrianglePath {
 
 				val triagle = (0 until lineCnt).map(_ => source.next().split("\\s+").toVector.map(_.trim.toInt))
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				//println(s"Triagle:")
 				//for (row <- triagle) {
 				//	for (x <- row) print(s"$x ")

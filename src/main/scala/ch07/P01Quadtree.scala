@@ -78,7 +78,7 @@ object P01Quadtree {
 		(1 to testCount).foreach {
 			testNo =>
 				val compressedStr = source.next()
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Compressed String: $compressedStr")
 				println(s"Reverse Compressed String: ${reverse(compressedStr.toIterator)}")
 		}

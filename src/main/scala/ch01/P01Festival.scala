@@ -56,7 +56,7 @@ object P01Festival {
 			val selectedDays = new Array[Int](dayValues.size)
 
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(s"DayCnt: $dayCnt, TeamCnt: $teamCnt")
 			println(s"DayValues: $dayValues")
 			println(solve(selectedDays, dayValues, teamCnt, Double.MaxValue))

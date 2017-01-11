@@ -28,7 +28,7 @@ object P03Morse {
 		(1 to testCount).foreach { testNo =>
 			val Array(n, m, k) = source.next().split(" ").map(_.toInt)
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(solve(n, m, k))
 			//println(solve2(n, m, k))
 			println(solve3(n, m, k))

@@ -47,7 +47,7 @@ object P12Genius {
 			val relationMatrix = (0 until musicCnt).toVector.map(_ => source.next().split(" ").map(_.toDouble).toVector)
 			val favoriteMusicNoColl = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			/*
 			println(s"Music Cnt = $musicCnt")
 			println(s"Elapse Time = $elapseTime")

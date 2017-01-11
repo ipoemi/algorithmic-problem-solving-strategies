@@ -38,7 +38,7 @@ object P13Numbers {
 			val _ = source.next()
 			val targetNoList = source.next().split(" ").map(_.toInt).toVector
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			//println(s"VillageCnt: $villageCnt")
 			//println(s"DayCnt: $dayCnt")
 			//println(s"StartNo: $startNo")

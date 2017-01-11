@@ -19,7 +19,7 @@ object P08Tiling2 {
 		(1 to testCount).foreach { testNo =>
 			val n = source.next().toInt
 
-			println(s"-- testCase $testNo --")
+			//println(s"-- testCase $testNo --")
 			println(s"n: $n")
 			println(solve(n))
 		}

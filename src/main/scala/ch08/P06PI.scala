@@ -20,7 +20,7 @@ object P06PI {
 			testNo =>
 				val nums = source.next()
 
-				println(s"-- testCase $testNo --")
+				//println(s"-- testCase $testNo --")
 				println(s"Nums: $nums")
 				println(solve(nums))
 		}

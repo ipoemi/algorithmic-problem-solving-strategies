@@ -2,41 +2,41 @@ package ch08
 
 object P08Tiling2 {
 
-	import scala.io._
+  import scala.io._
 
-	val in: String =
-		"""3
-			|1
-			|5
-			|100
-			|""".stripMargin
+  val in: String =
+    """3
+      |1
+      |5
+      |100
+      |""".stripMargin
 
-	val Mod = 1000000007
+  val Mod = 1000000007
 
-	def main(args: Array[String]): Unit = {
-		val source = Source.fromString(in).getLines()
-		val testCount = source.next().toInt
-		(1 to testCount).foreach { testNo =>
-			val n = source.next().toInt
+  def main(args: Array[String]): Unit = {
+    val source = Source.fromString(in).getLines()
+    val testCount = source.next().toInt
+    (1 to testCount).foreach { testNo =>
+      val n = source.next().toInt
 
-			//println(s"-- testCase $testNo --")
-			println(s"n: $n")
-			println(solve(n))
-		}
-	}
+      //println(s"-- testCase $testNo --")
+      println(s"n: $n")
+      println(solve(n))
+    }
+  }
 
-	def solve(n: Int): Int = {
-		val cache: Array[Option[Int]] = Array.fill(n + 1)(None)
+  def solve(n: Int): Int = {
+    val cache: Array[Option[Int]] = Array.fill(n + 1)(None)
 
-		def aux(n: Int): Int = {
-			if (n <= 1) return 1
-			val cachedValue = cache(n)
-			if (cachedValue.nonEmpty) return cachedValue.get
-			cache(n) = Some((aux(n - 2) + aux(n - 1)) % Mod)
-			cache(n).get
-		}
+    def aux(n: Int): Int = {
+      if (n <= 1) return 1
+      val cachedValue = cache(n)
+      if (cachedValue.nonEmpty) return cachedValue.get
+      cache(n) = Some((aux(n - 2) + aux(n - 1)) % Mod)
+      cache(n).get
+    }
 
-		aux(n)
-	}
+    aux(n)
+  }
 
 }

@@ -52,18 +52,20 @@ object P01BoardCover2 {
   def main(args: Array[String]): Unit = {
     val source = Source.fromString(in).getLines()
     val testCount = source.next().toInt
+    //val startTime = System.currentTimeMillis()
     (1 to testCount).foreach { testNo =>
-      val Array(boardHeight, boardWidth, blockHeight, blockWidth) = source.next().split(" ").map(_.toInt)
+      val Array(boardHeight, _, blockHeight, _) = source.next().split(" ").map(_.toInt)
       val board = Board((0 until boardHeight).map(_ => source.next().map { ch => if (ch == '#') 1 else 0 }))
       val block = Block((0 until blockHeight).map(_ => source.next().map { ch => if (ch == '#') 1 else 0 }))
 
-      println(s"-- testCase $testNo --")
+      //println(s"-- testCase $testNo --")
       //println(s"Board: ")
       //println(board)
       //println(s"Block: ")
       //println(block)
       println(solve(board, block))
     }
+    //println(s"Spent Time: ${System.currentTimeMillis() - startTime}")
   }
 
   def rotate(block: Block): Block = {
@@ -99,55 +101,100 @@ object P01BoardCover2 {
     None
   }
 
+  def indexOfOpen(board: Seq[Array[Int]]): Option[(Int, Int)] = {
+    for (y <- board.indices)
+      for (x <- board(y).indices)
+        if (board(y)(x) == 0) return Some((y, x))
+    None
+  }
+
   def solve(board: Board, block: Block): String = {
     val uniqueBlockPositions = createBlocks(block).map(blockToPositions)
     //println(uniqueBlockPositions)
 
     //var best = 0
 
+    //val boardArray = board.map(_.toArray)
+
+    //def set(aBoard: Seq[Array[Int]], positions: Seq[(Int, Int)], value: Int): Unit = {
+    //  positions.foreach { pos => aBoard(pos._1)(pos._2) += value }
+    //}
+
+    //def canUpdate(aBoard: Seq[Array[Int]], positions: Seq[(Int, Int)]): Boolean = positions.forall { pos =>
+    //  (pos._1 >= 0 && pos._1 < aBoard.size) && (pos._2 >= 0 && pos._2 < aBoard.head.length) && (aBoard(pos._1)(pos._2) == 0)
+    //}
+
     val blockSize = block.flatten.count(_ != 0)
 
-    def greedy(aBoard: Board): Int = {
-      aBoard.flatten.count(_ == 0) / blockSize
+    def blanks(aBoard: Board): Int = {
+      aBoard.flatten.count(_ == 0)
     }
 
-    def aux(auxBoard: Board, result: Int): Int = {
-      indexOfOpen(auxBoard) match {
-        case None => result
-        case Some(startPos) =>
-          uniqueBlockPositions.foldLeft(result) { (acc, blockPosCell) =>
-            val newBlockPosColl = blockPosCell.map(pos => (pos._1 + startPos._1, pos._2 + startPos._2))
-            if (auxBoard.canUpdate(newBlockPosColl)) {
-              val newBoard = newBlockPosColl.foldLeft(auxBoard) { (boardAcc, pos) =>
-                boardAcc.updated(pos._1, pos._2, boardAcc(pos._1)(pos._2) + 1)
-              }
-              if (result + greedy(newBoard) + 1 > acc) {
-                /*
-                if (result + 1 > best) {
-                  best = result + 1
-                  println("==============================ipoemi==============================")
-                  println(newBlockPosColl)
-                  println(auxBoard)
-                  println(newBoard)
-                }
-                */
-                aux(newBoard, result + 1)
-              } else {
-                acc
-              }
-            } else {
-              val newBoard = auxBoard.updated(startPos._1, startPos._2, auxBoard(startPos._1)(startPos._2) + 1)
-              if (result + greedy(newBoard) > acc) {
-                aux(newBoard, result)
-              } else {
-                acc
-              }
+    /*
+    def aux(placed: Int, blankCnt: Int): Unit = {
+      //boardArray.foreach(row => println(row.mkString))
+      //println
+      indexOfOpen(boardArray) match {
+        case Some(startPos) if placed + blankCnt / blockSize > best =>
+          for (positions <- uniqueBlockPositions) {
+            val newPositions = positions.map(pos => (pos._1 + startPos._1, pos._2 + startPos._2))
+            if (canUpdate(boardArray, newPositions)) {
+              set(boardArray, newPositions, 1)
+              aux(placed + 1, blankCnt - blockSize)
+              set(boardArray, newPositions, -1)
             }
           }
+          boardArray(startPos._1)(startPos._2) = 1
+          aux(placed, blankCnt - 1)
+          boardArray(startPos._1)(startPos._2) = 0
+        case _ => best = best.max(placed)
+      }
+    }
+    */
+
+    def aux(auxBoard: Board, blankCnt: Int, placedCnt: Int, auxBest: Int): Int = {
+      indexOfOpen(auxBoard) match {
+        case Some(startPos) =>
+          val res1 = uniqueBlockPositions.foldLeft(auxBest) { (acc, blockPosColl) =>
+            if ((blankCnt - blockSize) / blockSize + placedCnt + 1 > acc) {
+              val newBlockPosColl = blockPosColl.map(pos => (pos._1 + startPos._1, pos._2 + startPos._2))
+              if (auxBoard.canUpdate(newBlockPosColl)) {
+                val newBoard = newBlockPosColl.foldLeft(auxBoard) { (boardAcc, pos) =>
+                  boardAcc.updated(pos._1, pos._2, boardAcc(pos._1)(pos._2) + 1)
+                }
+                aux(newBoard, blankCnt - blockSize, placedCnt + 1, auxBest).max(acc)
+              }
+              else acc
+            } else {
+              acc
+            }
+          }
+          if ((blankCnt - 1) / blockSize + placedCnt > res1) {
+            val newBoard = auxBoard.updated(startPos._1, startPos._2, auxBoard(startPos._1)(startPos._2) + 1)
+            res1.max(aux(newBoard, blankCnt - 1, placedCnt, res1))
+          }
+          else res1
+        /*
+        val res1 = for {
+          blockPosColl <- uniqueBlockPositions
+          newBlockPosColl = blockPosColl.map(pos => (pos._1 + startPos._1, pos._2 + startPos._2))
+          if auxBoard.canUpdate(newBlockPosColl)
+        } yield {
+          val newBoard = newBlockPosColl.foldLeft(auxBoard) { (boardAcc, pos) =>
+            boardAcc.updated(pos._1, pos._2, boardAcc(pos._1)(pos._2) + 1)
+          }
+          aux(newBoard, result + 1)
+        }
+        val newBoard = auxBoard.updated(startPos._1, startPos._2, auxBoard(startPos._1)(startPos._2) + 1)
+        (res1 :+ aux(newBoard, result)).max
+        */
+        case _ => placedCnt.max(auxBest)
       }
     }
 
-    aux(board, 0).toString
+    aux(board, blanks(board), 0, 0).toString
+    //aux(0, blanks(board))
+    //best.toString
   }
 
 }

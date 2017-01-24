@@ -28,22 +28,23 @@ object P02Allergy {
   def main(args: Array[String]): Unit = {
     val source = Source.fromString(in).getLines()
     val testCount = source.next().toInt
-    val startTime = System.nanoTime()
+    //val startTime = System.nanoTime()
     (1 to testCount).foreach { testNo =>
       val Array(_, foodCnt) = source.next().split(" ").map(_.toInt)
       val friends = source.next().split(" ").toSeq
       val foods = (0 until foodCnt).map(_ => source.next().split(" ").tail.toSeq.map(name => friends.indexOf(name)))
 
-      println(s"-- testCase $testNo --")
-      println(s"Friends: $friends")
-      println(s"Foods: ")
-      foods.foreach(println)
-      println(solve(friends, foods))
+      //println(s"-- testCase $testNo --")
+      //println(s"Friends: $friends")
+      //println(s"Foods: ")
+      //foods.foreach(println)
+      println(solve2(friends, foods))
     }
-    println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
+    //println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
   }
 
   def solve(friends: Seq[String], foods: Seq[Seq[Int]]): String = {
+
     def validSelect(selectedFoods: Seq[Int]): Boolean = {
       selectedFoods.flatMap(idx => foods(idx)).toSet.size == friends.size
     }
@@ -71,33 +72,38 @@ object P02Allergy {
 
   def solve2(friends: Seq[String], foods: Seq[Seq[Int]]): String = {
 
-    val canEat = friends.indices.map(friendNo => foods.indices.filter(idx => foods(idx).contains(friendNo)))
+    //val sortedFoods = foods.sortBy(_.size)
+    val sortedFoods = foods
+    val canEat = friends.indices.map(friendNo => sortedFoods.indices.filter(idx => sortedFoods(idx).contains(friendNo)))
+    val newCanEat = canEat
+    val newFoods = sortedFoods
+    //canEat.foreach(println)
+    //val sortedCanEat = canEat.zipWithIndex.sortBy(_._1.size)
+    //val idxMap = sortedCanEat.map(_._2).zipWithIndex.sortBy(_._1).map(_._2)
+    //println(idxMap)
+
+    //val newFoods = sortedFoods.map(edible => edible.map(idxMap(_)))
+    //val newCanEat = sortedCanEat.map(_._1)
+    /*
+    println("==============================ipoemi==============================")
+    newCanEat.foreach(println)
+    println("-------------------------------------------------------------")
+    val tmpCanEat = friends.indices.map(friendNo => newFoods.indices.filter(idx => newFoods(idx).contains(friendNo)))
+    tmpCanEat.foreach(println)
+    */
 
     def aux(edible: Seq[Boolean], chosen: Int, best: Int): Int = {
-      if (chosen >= best) {
-        best
-      } else {
-        val first = edible.indexWhere(!_)
-        if (first == -1) {
-          chosen
-        } else  {
-          canEat(first).foldLeft(best) { (newBest, foodNo) =>
-            val newEdible = foods(foodNo).foldLeft(edible) { (acc, friendNo) => acc.updated(friendNo, true)}
-            newBest.min(aux(newEdible, chosen + 1, newBest))
-          }
+      if (chosen >= best) best
+      else {
+        edible.zipWithIndex.filter(!_._1).map(_._2) match {
+          case Seq() => chosen
+          case cand =>
+            newCanEat(cand.head).foldLeft(best) { (newBest, foodNo) =>
+              val newEdible = newFoods(foodNo).foldLeft(edible) { (acc, friendNo) => acc.updated(friendNo, true) }
+              newBest.min(aux(newEdible, chosen + 1, newBest))
+            }
         }
       }
-
-      /*
-      if (foodNo == foods.size - 1) {
-        if (edible.forall(identity)) chosen
-        else best
-      } else {
-        val newBest = aux(foodNo + 1, edible, chosen, best)
-        val newEdible = foods(foodNo).foldLeft(edible) { (acc, friendNo) => acc.updated(friendNo, true)}
-        aux(foodNo + 1, newEdible, chosen + 1, newBest)
-      }
-      */
     }
 
     //aux(0, friends.map(_ => false), 0, foods.size).toString

@@ -50,7 +50,7 @@ object P03Kakuro2 {
   def main(args: Array[String]): Unit = {
     val source = Source.fromString(in).getLines()
     val testCount = source.next().toInt
-    //val startTime = System.nanoTime()
+    val startTime = System.nanoTime()
     (1 to testCount).foreach { testNo =>
       val boardSize = source.next().toInt
       val board = Board((0 until boardSize).map(_ => source.next().split(" ").toSeq.map(_.toInt)))
@@ -74,7 +74,7 @@ object P03Kakuro2 {
       //hints.foreach(println)
       println(solve(board, hints))
     }
-    //println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
+    println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
   }
 
   @inline
@@ -90,13 +90,13 @@ object P03Kakuro2 {
   val candidates: (Int, Int, Int) => Int = Function.untupled(memoize {
     case (len, sum, known) =>
       (0 until MaxSubset by 2).foldLeft(0) { (allSets, set) =>
-        if ((set & known) == known && maskSize(set) == len && maskSum(set) == sum)
-          allSets | set
-        else
-          allSets
-      } & ~known
-  })
-  */
+    if ((set & known) == known && maskSize(set) == len && maskSum(set) == sum)
+      allSets | set
+    else
+      allSets
+  } & ~known
+})
+*/
 
   def solve(colorBoard: Board[Int], hints: Seq[Hint]): String = {
     val auxCandidates: Seq[Seq[Array[Int]]] = Seq.fill(MaxLength + 1)(Seq.fill(MaxSum + 1)(Array.fill(MaxSubset)(0)))
@@ -105,9 +105,12 @@ object P03Kakuro2 {
       val l = maskSize(set)
       val s = maskSum(set)
       var subset = set
-      auxCandidates(l)(s)(subset) |= (set & ~subset)
+      //println(s"l: ${l}")
+      //println(s"s: ${s}")
+      //println(s"set: ${("000000000" + Integer.toBinaryString(set)).takeRight(10)}")
       while (subset != 0) {
         subset = (subset - 1) & set
+        //println(s"subset: ${("000000000" + Integer.toBinaryString(subset)).takeRight(10)}")
         auxCandidates(l)(s)(subset) |= (set & ~subset)
       }
     }

@@ -1,5 +1,7 @@
 package ch12
 
+import scala.annotation.tailrec
+
 
 object P01DARPA {
 
@@ -19,21 +21,63 @@ object P01DARPA {
   def main(args: Array[String]): Unit = {
     val source = Source.fromString(in).getLines()
     val testCount = source.next().toInt
-    val startTime = System.nanoTime()
+    //val startTime = System.nanoTime()
     (1 to testCount).foreach { testNo =>
       val Array(cameraCnt, stationCnt) = source.next().split(" ").map(_.toInt)
       val stationPosition = source.next().split(" ").map(_.toDouble)
 
-      println(s"-- testCase $testNo --")
-      println(s"CameraCnt=$cameraCnt, StationCnt=$stationCnt ")
-      println(s"Station Position: ${stationPosition.toSeq}")
+      //println(s"-- testCase $testNo --")
+      //println(s"CameraCnt=$cameraCnt, StationCnt=$stationCnt ")
+      //println(s"Station Position: ${stationPosition.toSeq}")
       //println(s"Hit List: ")
       //hints.foreach(println)
-      println(solve(stationPosition, cameraCnt))
+      //println(solve(stationPosition, cameraCnt))
+      println(solve2(stationPosition, cameraCnt))
     }
-    println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
+    //println(s"Spent Time: ${(System.nanoTime() - startTime) / 1000.0}")
   }
 
+  // bisection method
+  def solve2(stationPosition: Seq[Double], cameraCnt: Int): String = {
+
+    val sp = stationPosition
+
+    @tailrec
+    lazy val auxExists: (Double, Int, Int) => Boolean = {
+      case (_, _, selectCnt) if selectCnt == cameraCnt => true
+      case (_, lastIdx, _) if lastIdx == sp.size - 1 => false
+      case (distance, lastIdx, selectCnt) =>
+        val next = sp.indices.indexWhere(cur => sp(cur) - sp(lastIdx) >= distance, lastIdx)
+        if (next == -1) false
+        else auxExists(distance, next, selectCnt + 1)
+    }
+
+    /*
+    def auxExists(gap: Double, a: Int, b: Int): Boolean = {
+      var limit = -1.0
+      var installed = 0
+
+      for (i <- sp.indices) {
+        if (limit <= sp(i)) {
+          installed += 1
+          limit = sp(i) + gap
+        }
+      }
+      installed >= cameraCnt
+    }
+    */
+
+    val loopCnt = 100
+
+    (0 until loopCnt).foldLeft((0.0, 241.0)) { (result, _) =>
+      val mid = (result._1 + result._2) / 2.0
+      if (auxExists(mid, 0, 1)) (mid, result._2)
+      else (result._1, mid)
+    }._1.toString
+
+  }
+
+  // dynamic programming
   def solve(stationPosition: Seq[Double], cameraCnt: Int): String = {
     val cache = mutable.Map[Int, Option[Double]]()
 

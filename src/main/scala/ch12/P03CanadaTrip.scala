@@ -2,7 +2,7 @@ package ch12
 
 import scala.io._
 
-object P02CanadaTrip {
+object P03CanadaTrip {
 
   val in: String =
     """2
